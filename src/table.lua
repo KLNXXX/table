@@ -39,7 +39,7 @@ function table.slice(tbl, first, last, step)
 end
 
 --- merge contents of two tables
---- will overrwrite content of tbl if both keys are the same
+--- will overwrite content of tbl if both keys are the same
 function table.merge(tbl1, tbl2)
     for k, v in pairs(tbl2) do
         if (type(v) == "table") then
@@ -83,6 +83,15 @@ function table.drop(tbl, value)
     end
 
     return newTbl
+end
+
+--- fill an array with values
+function table.fill(tbl, val, from, to)
+    for idx = from, to do
+        tbl[idx] = val
+    end
+
+    return tbl
 end
 
 --- dumps out all values of a array/dict
