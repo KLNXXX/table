@@ -38,6 +38,24 @@ function table.slice(tbl, first, last, step)
     return sliced
 end
 
+--- merge contents of two tables
+--- will overrwrite content of tbl if both keys are the same
+function table.merge(tbl1, tbl2)
+    for k, v in pairs(tbl2) do
+        if (type(v) == "table") then
+            if (type(tbl1[k] or false) == "table") then
+                table.merge(tbl1[k] or {}, tbl2[k] or {})
+            else
+                tbl1[k] = v
+            end
+        else
+            tbl1[k] = v
+        end
+    end
+
+    return tbl1
+end
+
 --- lua 5.1 does not have table.find
 function table.find(tbl, item)
     for i = 1, #tbl do
