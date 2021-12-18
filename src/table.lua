@@ -38,6 +38,17 @@ function table.slice(tbl, first, last, step)
     return sliced
 end
 
+--- converts string to array
+function table.array(input)
+    local txt = {}
+
+    for i = 1, input:len() do
+        txt[i] = input:sub(i, i)
+    end
+
+    return txt
+end
+
 --- merge contents of two tables
 --- will overwrite content of tbl if both keys are the same
 function table.merge(tbl1, tbl2)
