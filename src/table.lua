@@ -117,8 +117,16 @@ function table.fill(tbl, val, from, to)
 end
 
 --- dumps out all values of a array/dict
-function table.dump(o)
+local function _addType(main, _type)
+    return ("%s : %s"):format(main, _type)
+end
+
+function table.dump(o, addTypes)
+    --- luau support
+    local type = typeof or type
+    local txt = tostring
     local objType = type(o)
+    
     if (objType == 'table') then
         local tblLength = table.length(o)
         local iteration = 0
@@ -128,7 +136,7 @@ function table.dump(o)
             iteration = iteration + 1
 
             if type(k) ~= 'number' then k = ("\'%s\'"):format(k) end
-            s = s .. ("[%s] = %s"):format(k, table.dump(v))
+            s = s .. ("[%s] = %s"):format(k, table.dump(v, addTypes))
 
             if (iteration < tblLength) then
                 s = s .. ", "
@@ -137,9 +145,17 @@ function table.dump(o)
 
         return s .. '} '
     elseif (objType == 'string') then
-        return ("\'%s\'"):format(tostring(o))
+        if (addTypes) then
+            return _addType(("\'%s\'"):format(txt(o)), objType)
+        else
+            return ("\'%s\'"):format(txt(o))
+        end
     elseif (objType == 'number') then
-        return tostring(o)
+        if (addTypes) then
+            return _addType(txt(o), objType)
+        else
+            return txt(o)
+        end
     end
 end
 
