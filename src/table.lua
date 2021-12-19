@@ -12,6 +12,17 @@ function table.indexOf(tbl, value)
     return nil
 end
 
+--- get the length of a table/array
+function table.length(tbl)
+    local count = 0
+
+    for k, v in pairs(tbl) do
+        count = count + 1
+    end
+
+    return count
+end
+
 --- get middle value of an array
 function table.getMiddle(array)
     return array[math.floor((#array / 2) + 0.5)]
