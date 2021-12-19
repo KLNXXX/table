@@ -120,11 +120,21 @@ end
 function table.dump(o)
     local objType = type(o)
     if (objType == 'table') then
-        local s = '{ '
-            for k,v in pairs(o) do
-                if type(k) ~= 'number' then k = '"'..k..'"' end
-                s = s .. '['..k..'] = ' .. table.dump(v) .. ', '
+        local tblLength = table.length(o)
+        local iteration = 0
+        local s = '{'
+
+        for k, v in pairs(o) do
+            iteration = iteration + 1
+
+            if type(k) ~= 'number' then k = ("\'%s\'"):format(k) end
+            s = s .. ("[%s] = %s"):format(k, table.dump(v))
+
+            if (iteration < tblLength) then
+                s = s .. ", "
             end
+        end
+
         return s .. '} '
     elseif (objType == 'string') then
         return ("\'%s\'"):format(tostring(o))
