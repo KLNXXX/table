@@ -1,5 +1,6 @@
 local oldTable = table
-local table = oldTable
+local table = {}
+table.__index = oldTable
 
 --- get the index of a value
 function table.indexOf(tbl, value)
