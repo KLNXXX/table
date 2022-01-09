@@ -122,10 +122,19 @@ local function _addType(main, _type)
     return ("%s : %s"):format(main, _type)
 end
 
+local function txt(object)
+    local status, result = xpcall(function()
+        return tostring(object)
+    end, function(err)
+        return "CoreObject"
+    end)
+
+    return result
+end
+
 function table.dump(o, addTypes)
     --- luau support
     local type = typeof or type
-    local txt = tostring
     local objType = type(o)
     
     if (objType == 'table') then
@@ -157,6 +166,8 @@ function table.dump(o, addTypes)
         else
             return txt(o)
         end
+    else
+        return _addType(txt(o), objType)
     end
 end
 
