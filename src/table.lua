@@ -1,3 +1,4 @@
+--@test
 local oldTable = table
 local table = {}
 table.__index = oldTable
